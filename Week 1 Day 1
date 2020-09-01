@@ -4,7 +4,6 @@ A[i], A[j], A[k], & A[l] are the 4 elements of A, where i, j, k & l are the perm
 
 Largest Time for Given Digits
 
-Solution
 Given an array of 4 digits, return the largest 24 hour time that can be made.
 
 The smallest 24 hour time is 00:00, and the largest is 23:59.  Starting from 00:00, a time is larger if more time has elapsed since midnight.
