@@ -37,6 +37,77 @@ Each tree has at most 5000 nodes.
 Each node's value is between [-10^5, 10^5].
 
 -----------------
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void inorder(TreeNode root, List<Integer> ll)
+    {
+        if(root==null)return ;
+        
+        inorder(root.left,ll);
+        ll.add(root.val);
+        inorder(root.right,ll);
+    }
+    
+    public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+        List<Integer> l=new ArrayList<>();
+        List<Integer> l1=new ArrayList<>();
+        List<Integer> l2=new ArrayList<>();
+        inorder(root1,l1);
+        inorder(root2,l2);
+       // l1=getAllElements(root1.left, root1.right);
+       // l2=getAllElements(root2.left, root2.right);
+        
+       // List<Integer> list = new ArrayList();
+        int i = 0, j = 0;
+        while(i < l1.size() && j < l2.size()) {
+           // if(l1.get(i) < l2.get(j)) l.add(l1.get(i++));
+            l.add(l1.get(i++));
+            //else l.add(l2.get(j++));
+            l.add(l2.get(j++));
+        }
+        
+        while(i < l1.size()) l.add(l1.get(i++));
+        while(j < l2.size()) l.add(l2.get(j++));
+        
+        
+        
+//         while(!l1.isEmpty() && !l2.isEmpty())
+//         {
+//             l.add(l1.val);
+//             l.add(l2.val);
+//         }
+//         while(!l1.isEmpty() )
+//         {
+//             l.add(l1.val);
+//         }
+//         while( !l2.isEmpty())
+//         {
+//             l.add(l2.val);
+//         }
+        
+        Collections.sort(l);
+        
+        return l;
+        
+    }
+}
+
+More optimized
+
 
 class Solution {
     public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
