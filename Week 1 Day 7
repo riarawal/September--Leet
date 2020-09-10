@@ -27,3 +27,30 @@ class Solution {
         
     }
 }
+
+class Solution {
+    public boolean wordPattern(String pattern, String str) {
+        HashMap<Character, String> h=new HashMap<>();
+        String[] val=str.split(" ");
+       
+        if(val.length!= pattern.length())return false; 
+        
+        for(int i=0;i<pattern.length();i++)
+        {   char c=pattern.charAt(i);
+            if(h.containsKey(c))
+            {   //System.out.println(val[i]+" "+h.get(c)+" 3");
+                if (h.get(c).equals(val[i])==false)return false;
+            }
+            else if(h.containsValue(val[i])){
+                //System.out.println(val[i]+" "+c+" 2");
+                return false;
+               
+            }
+            else{
+               // System.out.println(val[i]+" "+c+" 1");
+                h.put(c,val[i]);
+            }
+        }
+        return true;
+    }
+}
