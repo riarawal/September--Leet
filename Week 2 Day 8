@@ -1,17 +1,11 @@
 Sum of Root To Leaf Binary Numbers
-
-Solution
 Given a binary tree, each node has value 0 or 1.  Each root-to-leaf path represents a binary number starting with the most significant bit.  For example, if the path is 0 -> 1 -> 1 -> 0 -> 1, then this could represent 01101 in binary, which is 13.
 
 For all leaves in the tree, consider the numbers represented by the path from the root to that leaf.
 
 Return the sum of these numbers.
 
- 
-
 Example 1:
-
-
 
 Input: [1,0,1,0,1,0,1]
 Output: 22
@@ -27,3 +21,55 @@ The answer will not exceed 2^31 - 1.
 Hint: Find each path, then transform that path to an integer in base 10.
 
 ----------
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+int sum = 0;
+public int sumRootToLeaf(TreeNode root) {
+	dfs(root,"");
+	return sum;
+}
+
+public void dfs(TreeNode root, String curr) {
+	if(root==null) return;
+    dfs(root.right, curr+root.val);
+	dfs(root.left, curr+root.val);  
+	if(root.right==null && root.left==null)
+		sum += Integer.parseInt(curr+root.val,2);
+	  
+    }
+}
+    
+//    bitwise approach
+//     int rootToLeaf = 0;
+//     public void preorder(TreeNode r, int currNumber) {
+//         if (r != null) {
+//             currNumber = (currNumber << 1) | r.val;
+//             // update root-to-leaf sum
+//             if (r.left == null && r.right == null) {
+//             rootToLeaf += currNumber;
+//             }
+//             preorder(r.left, currNumber);
+//             preorder(r.right, currNumber);
+//         }
+//     }
+
+//     public int sumRootToLeaf(TreeNode root) {
+//         preorder(root, 0);
+//         return rootToLeaf;
+//     }
+// }
