@@ -43,3 +43,35 @@ Travel to station 0. Your tank = 4 - 3 + 2 = 3
 Travel to station 1. Your tank = 3 - 3 + 3 = 3
 You cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.
 Therefore, you can't travel around the circuit once no matter where you start.
+
+
+---------
+
+
+class Solution {
+   public int canCompleteCircuit(int[] gas, int[] cost) {
+    int sumGas = 0;
+    int sumCost = 0;
+    int start = 0;
+    int tank = 0;
+    for (int i = 0; i < gas.length; i++) {
+        sumGas += gas[i];
+        sumCost += cost[i];
+        tank += gas[i] - cost[i];
+       // System.out.println(i);
+        //System.out.println(sumGas);
+        //System.out.println(sumCost);
+        //System.out.println(tank);
+        //System.out.println();
+        if (tank < 0) {
+            start = i+1;
+            tank = 0;
+        }
+    }
+    if (sumGas < sumCost) {
+        return -1;
+    } else {
+        return start;
+    }
+}
+}
