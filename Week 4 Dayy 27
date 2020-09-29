@@ -36,3 +36,89 @@ values.length == equations.length
 queries[i].length == 2
 1 <= queries[i][0].length, queries[i][1].length <= 5
 equations[i][0], equations[i][1], queries[i][0], queries[i][1] consist of lower case English letters and digits.
+
+
+-------
+
+
+class Solution {
+  //  public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        
+    //}
+   
+    // would be faster to use Char, but we have String
+    Map<String, Map<String, Double>> connections = new HashMap<>();
+    // array of results
+    double[] result;
+    // mark visited 
+    Map<String, Boolean> visited = new HashMap<>();
+    
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        // all results -1 by default
+        result = new double[queries.size()];
+        Arrays.fill(result, -1.0);
+
+        int counter = 0;
+        // fill all dependencies in both directions
+        for (List<String> pair: equations) {
+            String first = pair.get(0);
+            String second = pair.get(1);
+            double value = values[counter];
+            if (!connections.containsKey(first)) {
+                connections.put(first, new HashMap<String, Double>());
+            }
+            if (!connections.containsKey(second)) {
+                connections.put(second, new HashMap<String, Double>());
+            }
+            // in given direction
+            connections.get(first).put(second, value);
+            // in other direction, value of edge will 1 / given
+            connections.get(second).put(first, 1.0 / value);
+            // setting all visites as false;
+            visited.put(first, false);
+            visited.put(second, false);
+            counter++;
+        }
+        
+        counter = 0;
+        // iterate over all queries
+        for (List<String> pair: queries) {
+            String first = pair.get(0);
+            String second = pair.get(1);
+            // if vertex is not in list - no solution (-1.0 by default)
+            if (!connections.containsKey(first) || !connections.containsKey(second)) {
+                counter++;
+                continue;
+            }
+            // else going dfs with value 1.0 for case when first == second
+            dfs(first, second, counter, 1.0);
+            counter++;
+        }
+        return result;
+    }
+    
+    private void dfs(String first, String second, int counter, double value) {
+        // not visiting twise
+        if (visited.get(first)) return;
+        // if route found = write value and return
+        if (first == second) {
+            result[counter] = value;
+            return;
+        }
+
+        // if adjacent contains final point - calculate route value
+        Map<String, Double> adjacent = connections.get(first);
+        if (adjacent.containsKey(second)) {
+            result[counter] = value * adjacent.get(second);
+            return;
+        }
+        // in other case iterate over all adjacent vetices and mark current as visited
+        visited.put(first, true);
+        for (Map.Entry<String, Double> entry: adjacent.entrySet()) {
+            dfs(entry.getKey(), second, counter, value * entry.getValue());
+        }
+        // unmark it after
+        visited.put(first, false);
+    }
+}
+
