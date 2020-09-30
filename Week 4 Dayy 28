@@ -15,3 +15,83 @@ Note:
 0 < nums.length <= 50000.
 0 < nums[i] < 1000.
 0 <= k < 10^6.
+
+------
+
+  class Solution {
+//     public int numSubarrayProductLessThanK(int[] nums, int p) {
+//         int prod=1;
+//         int n=nums.length;
+//         int count=0;
+//         for(int i=0;i<n;i++)
+//         {
+//             for(int j=i;j<n;j++)
+//             {
+//                 for(int k=i;k<=j;k++)
+//                 {
+//                     if(nums[k]*prod<p)
+//                     {
+//                         //prod=prod*nums[p];
+//                         count++;
+                        
+//                     }
+//                     prod=1;
+//                 }
+//             }
+//         }
+        
+//         return count;
+//     }
+    
+//      static int numSubarrayProductLessThanK(int array[],  
+//                               int k) 
+//     {   int n=array.length;
+//         int count = 0;  
+//         int i, j, mul;  
+//          int temp=1; 
+//         for (i = 0; i < n; i++) 
+//         { 
+              
+//             // Counter for single element 
+//             if (array[i] <= k) 
+//                 count++; 
+      
+//             mul = array[i]; 
+      
+//             for (j = i + 1; j < n; j++)  
+//             { 
+                  
+//                 // Multiple subarray 
+//                 temp=mul;
+//                 mul = mul * array[j];  
+                  
+//                 // If this multiple is less 
+//                 // than k, then increment 
+//                 if (mul < k && temp!=mul)  
+//                     count++;  
+//                 else
+//                     break;  
+//             } 
+//         } 
+      
+//         return count; 
+//     } 
+      
+       public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int n = nums.length;
+        long p = 1l;
+        int i = 0;
+        int j = 0;
+        int total = 0;
+        while(j < n){
+            p *= nums[j];
+            while(i <= j&&p >= k){
+                p /= nums[i];
+                i++;
+            }
+            total += (j - i + 1);
+            j++;
+        }
+        return total;
+    }
+}
