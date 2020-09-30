@@ -16,3 +16,9 @@ Output: 1
 Follow up:
 
 Your algorithm should run in O(n) time and uses constant extra space.
+
+Think about how you would solve the problem in non-constant space. Can you apply that logic to the existing space?
+   Hide Hint #2  
+We don't care about duplicates or non-positive integers
+   Hide Hint #3  
+Remember that O(2n) = O(n)
